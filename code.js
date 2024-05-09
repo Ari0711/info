@@ -1,41 +1,59 @@
+const alphabetOptions = {
+  english: [
+      'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F', 'g', 'G',
+      'h', 'H', 'i', 'I', 'j', 'J', 'k', 'K', 'l', 'L', 'm', 'M', 'n', 'N',
+      'o', 'O', 'p' ,'P', 'q', 'Q', 'r', 'R', 's', 'S', 't', 'T', 'u', 'U',
+      'v', 'V', 'w', 'W', 'x', 'X', 'y', 'Y', 'z', 'Z'
+  ],
+  kazakh: [
+    'а', 'А', 'ә', 'Ә', 'б', 'Б', 'в', 'В', 'г', 'Г', 'ғ', 'Ғ', 'д', 'Д', 'е', 'Е', 'ё', 'Ё', 'ж', 'Ж',
+    'з', 'З', 'и', 'И', 'й', 'Й', 'к', 'К', 'қ', 'Қ', 'л', 'Л', 'м', 'М',
+    'н', 'Н', 'ң', 'Ң', 'о', 'О', 'ө', 'Ө', 'п', 'П', 'р', 'Р', 'с', 'С',
+    'т', 'Т', 'у', 'У', 'ұ', 'Ұ', 'ү', 'Ү', 'ұ̈', 'Ұ̈', 'ф', 'Ф', 'х', 'Х',
+    'һ', 'Һ', 'ц', 'Ц', 'ч', 'Ч', 'ш', 'Ш', 'щ', 'Щ', 'ъ', 'Ъ', 'ы', 'Ы',
+    'і', 'І', 'ь', 'Ь', 'э', 'Э', 'ю', 'Ю', 'я', 'Я'
+]
+};
+
 function ceasarEncrypt() {
+  const language = document.querySelector('input[name="language"]:checked').value;//.value дает "индекс" выбранного языка
+  const alphabet = alphabetOptions[language]; // достаем нужный массив  
   let result = ''; 
-  let text = document.getElementById('ceasarText').value; // чтобы не писать "document.getElementById('ceasarText').value" несколько раз 
-  for (let i = 0; i < text.length; i++) {
-    let char = text[i]; // 
-    if (char.match(/[a-zA-Z]/)) { // чекаем на наличие в англ алфавите
-      let code = text.charCodeAt(i); // получаем значение символа в юникоде
-      if (char === char.toUpperCase()) {
-        code = ((code - 62)  % 26) + 65; // фомула для смены заглавных(алфавит заглавных букв начинаеться с 65 поэтому +65)
-      } else {
-        code = ((code - 94)  % 26) + 97; // формула для смены обычных букв на 3ши арипке после него 
-      }
-      result += String.fromCharCode(code); // ковертация юникода в символ и добавляем его в стринг результа
-    }
-    else{
-      result += char; // оставляем символ нетронутым если не являеться буквой
+
+  for (let i = 0; i < document.getElementById('ceasarText').value.length; i++) {// итерация всех символов написанного юзером текста 
+    let char = document.getElementById('ceasarText').value[i];//даем char-у значение символа
+    if (alphabet.includes(char)) {//провека на наличе символа в выбранном алфавите
+      result += alphabet[(alphabet.indexOf(char) + 6) % alphabet.length];/* если входит то добавляем индексу символа 3 чтобы поменять на нужную букву по методу Цезаря
+       и еще 3 поскольку в массиве находяться и заглавные и маленькие буквы, чтобы не выйти за предел массива юзаем % alphabet.length */
+    } else {
+      result += char; // не трогаем символы не входящие в алфавит
     }
   }
-  document.getElementById("ceasarResult").value = result; // вывод
+
+  document.getElementById("ceasarResult").value = result; // Output
 }
 
-const alphabetLower = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-const alphabetUpper = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+
 function atbashEncrypt(){
-  let result = '';
-  let text = document.getElementById('atbashText').value;/* достаем текст который юзер хочет зашифровать*/
-  for( let i=0; i < text.length; i++){
-    let char = text[i];
-    if(alphabetLower.includes(char)){/* проверяем если нужно зашифровать символ */
-      result += alphabetLower[25 - alphabetLower.indexOf(char)];/*25тый индекс у Z, если отнят значение индекса символа то получим нужный сивол */
-    }
-     else if(alphabetUpper.includes(char)){/* проверяем если нужно зашифровать символ */
-      result += alphabetUpper[25 - alphabetUpper.indexOf(char)];
-    }
-    else{
-      result += char;/* если символ не входит в алфавит*/
+  const language = document.querySelector('input[name="language"]:checked').value;//.value дает "индекс" выбранного языка
+  const alphabet = alphabetOptions[language];// достаем нужный массив 
+  let result = ''; 
+
+  for (let i = 0; i < document.getElementById('atbashText').value.length; i++) {// итерация всех символов написанного юзером текста 
+    let char = document.getElementById('atbashText').value[i];//даем char-у значение символа
+    if (alphabet.includes(char)) {//провека на наличе символа в выбранном алфавите
+      char = alphabet[(alphabet.length-1 - alphabet.indexOf(char))];/* если входит то используем указанную формулу чтобы "считать" с конца массива */
+      if (char === char.toLowerCase()) {/* поскольку в массиве по паре одной буквы то вышеуказзаная формула будет 
+      выдавать заглавную букву вместо обычной и наоборот  поэтому учитывая что буква правильна то можно данным выражением менять результат на нужный */
+        result += char.toUpperCase();
+      } else {
+        result += char.toLowerCase();
+      }
+    } else {
+      result += char; // не трогаем символы не входящие в алфавит
     }
   }
+
   document.getElementById('atbashResult').value = result;/*вывод*/
 }
 

@@ -14,16 +14,23 @@
   </div>
 
   <div id="ceasarUI" class="ui">
-    <textarea type="text" id="ceasarText" rows="12" cols="18" class="text"></textarea>
-    <button type="button" id="ceasarBtn" onclick="ceasarEncrypt()">|Cipher| |with| |caesar|</button>
-    <textarea type="text" id="ceasarResult" class="text" rows="12" cols="18" readonly></textarea>
+    <textarea type="text" id="ceasarText" rows="10" cols="30" class="text"></textarea><br>
+    <!-- выбор языка -->
+    <label> <input type="radio" name="language" value="english" checked> English </label><br>
+  <label> <input type="radio" name="language" value="kazakh"> Kazakh </label><br>
+  <!-- кнопка нажатие на которую выдает результат -->
+    <button type="button" id="ceasarBtn" onclick="ceasarEncrypt()">|Cipher| |with| |caesar|</button><br>
+    <!-- результат -->
+    <textarea type="text" id="ceasarResult" class="text" rows="10" cols="30" readonly></textarea>
   </div>
 
   <div id="atbashUI" class="ui">
     <!-- textarea = input type=text но можно имеет несколько строк -->
-    <textarea type="text" id="atbashText" rows="12" cols="18" class="text"></textarea>
-    <button type="button" id="atbashBtn" onclick="atbashEncrypt()">|Cipher| |with| |atbash|</button>
-    <textarea type="text" id="atbashResult" class="text" rows="12" cols="18" readonly></textarea>
+    <textarea type="text" id="atbashText" rows="10" cols="30" class="text"></textarea><br>
+    <label><input type="radio" name="language" value="english" checked> English</label><br>
+  <label><input type="radio" name="language" value="kazakh"> Kazakh</label><br>
+    <button type="button" id="atbashBtn" onclick="atbashEncrypt()">|Cipher| |with| |atbash|</button><br>
+    <textarea type="text" id="atbashResult" class="text" rows="10" cols="30" readonly></textarea>
   </div>
 
   <script src="code.js"></script>
